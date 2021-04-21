@@ -20,8 +20,7 @@ def canUnlockAll(boxes):
             tmp.update(boxes[key])
         keys.update(tmp)
 
-    print(keys)
-
+    # print(keys)
     for i in range(len(boxes)):
         if i not in keys:
             return False

@@ -17,7 +17,10 @@ def canUnlockAll(boxes):
     while (counter != len(tmp)):
         counter = len(tmp)
         for key in keys:
-            tmp.update(boxes[key])
+            try:
+                tmp.update(boxes[key])
+            except:
+                continue
         keys.update(tmp)
 
     # print(keys)

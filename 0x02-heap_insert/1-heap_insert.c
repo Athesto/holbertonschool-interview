@@ -2,7 +2,7 @@
 
 heap_t *heap_append(heap_t *root, int value);
 int count_nodes(heap_t *root);
-void get_level(int size, int *level, int *position);
+void index_to_lvl_pos(int index, int *level, int *position);
 void swap(int *a, int *b);
 
 /**
@@ -48,7 +48,7 @@ heap_t *heap_append(heap_t *root, int value)
 
 
 	size = count_nodes(runner);
-	get_level(size, &level, &r_pos);
+	index_to_lvl_pos(size, &level, &r_pos);
 	/* printf("counter=%d, level=%d, pos=%d\n", size, level, r_pos); */
 
 	while (level > 1)
@@ -59,7 +59,7 @@ heap_t *heap_append(heap_t *root, int value)
 			runner = runner->left;
 		level--;
 	}
-	if (((r_pos >> (level - 1)) & 1) == 1)
+	if ((r_pos & 1) == 1)
 	{
 		runner->right = binary_tree_node(runner, value);
 		runner = runner->right;
@@ -87,28 +87,28 @@ int count_nodes(heap_t *root)
 }
 
 /**
- * get_level - get the level of and the position of a new element
- * @size: an int with the number of nodes
+ * index_to_lvl_pos - convert index to level and position in a complete binary
+ * @index: the index in the equivalent array of the heap
  * @level: an int reference for the level (every level is a new child)
  * @position: an int reference for the relative position in the level
  *
  * Example:
- * Level          index         position in the Level
- *   0              0                     0
- *   1          1       2             0       1
- *   2        3   4   5   6         0   1   2   3
- *   3       7 8 9 A B C D E       0 1 2 3 4 5 6 7
+ *   |         index         Level   position in the Level
+ *   |           0             0               0
+ *   |       1       2         1           0       1
+ *   |     3   4   5   6       2         0   1   2   3
+ *   |    7 8 9 A B C D E      3        0 1 2 3 4 5 6 7
  */
-void get_level(int size, int *level, int *position)
+void index_to_lvl_pos(int index, int *level, int *position)
 {
 	int ref = 1;
 
-	for (*level = 0; size >= ((ref * 2) - 1); ref = ref * 2)
+	for (*level = 0; index >= ((ref * 2) - 1); ref = ref * 2)
 	{
 		(*level)++;
 	}
 
-	*position = size - (ref - 1);
+	*position = index - (ref - 1);
 }
 
 /**

@@ -1,6 +1,9 @@
 #include "binary_trees.h"
 
+heap_t *heap_append(heap_t **root, int value);
+int count_nodes(heap_t *root);
 void get_level(int size, int *level, int *position);
+void swap(int *a, int *b);
 
 /**
  * heap_insert - insert value into a Max Binary Heap
@@ -14,13 +17,37 @@ void get_level(int size, int *level, int *position);
 heap_t *heap_insert(heap_t **root, int value)
 {
 
+	heap_t *runner;
+
+	runner = heap_append(root, value);
+
+	while (runner->parent && runner->parent->n < runner->n)
+	{
+		swap(&(runner->n), &(runner->parent->n));
+		runner = runner->parent;
+	}
+
+	return (runner);
+}
+
+/**
+ * heap_append - insert node at the end of the heap (a complete binary tree)
+ * @root: reference to pointer of the root of the binary tree
+ * @value: value of node (int)
+ * Return: a pointer to the new node
+ */
+heap_t *heap_append(heap_t **root, int value)
+{
 	int level, r_pos, size;
 	heap_t *runner = *root;
 
 	if (*root == NULL)
-		return (*root = binary_tree_node(*root, value));
+	{
+		*root = binary_tree_node(*root, value);
+		return (*root);
+	}
 
-	size = count_nodes(*root);
+	size = count_nodes(runner);
 	get_level(size, &level, &r_pos);
 	/* printf("counter=%d, level=%d, pos=%d\n", size, level, r_pos); */
 
@@ -42,18 +69,8 @@ heap_t *heap_insert(heap_t **root, int value)
 		runner->left = binary_tree_node(runner, value);
 		runner = runner->left;
 	}
-	while (runner->parent && runner->parent->n < runner->n)
-	{
-		runner->parent->n =  runner->parent->n ^ runner->n;
-		runner->n =  runner->n ^ runner->parent->n;
-		runner->parent->n =  runner->parent->n ^ runner->n;
-		runner = runner->parent;
-	}
-
 
 	return (runner);
-
-
 }
 
 /**
@@ -86,12 +103,22 @@ void get_level(int size, int *level, int *position)
 {
 	int ref = 1;
 
-
 	for (*level = 0; size >= ((ref * 2) - 1); ref = ref * 2)
 	{
 		(*level)++;
 	}
 
-
 	*position = size - (ref - 1);
+}
+
+/**
+ * swap - swap 2 variables
+ * @a: a reference to the value
+ * @b: a reference to the value
+ */
+void swap(int *a, int *b)
+{
+	*a = *a ^ *b;
+	*b = *a ^ *b;
+	*a = *a ^ *b;
 }

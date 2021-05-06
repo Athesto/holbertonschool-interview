@@ -17,9 +17,45 @@ void swap(int *a, int *b);
 heap_t *heap_insert(heap_t **root, int value)
 {
 
-	heap_t *runner;
 
-	runner = heap_append(root, value);
+	/* runner = heap_append(root, value); */
+
+	int level, r_pos, size;
+	heap_t *runner = *root;
+
+	if (*root == NULL)
+	{
+		*root = binary_tree_node(*root, value);
+		return (*root);
+	}
+
+	size = count_nodes(runner);
+	get_level(size, &level, &r_pos);
+	/* printf("counter=%d, level=%d, pos=%d\n", size, level, r_pos); */
+
+	while (level > 1)
+	{
+		if (((r_pos >> (level - 1)) & 1) == 1)
+			runner = runner->right;
+		else
+			runner = runner->left;
+		level--;
+	}
+	if (((r_pos >> (level - 1)) & 1) == 1)
+	{
+		runner->right = binary_tree_node(runner, value);
+		runner = runner->right;
+	}
+	else
+	{
+		runner->left = binary_tree_node(runner, value);
+		runner = runner->left;
+	}
+
+
+
+
+
 
 	while (runner->parent && runner->parent->n < runner->n)
 	{

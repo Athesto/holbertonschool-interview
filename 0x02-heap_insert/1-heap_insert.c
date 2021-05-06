@@ -1,4 +1,5 @@
 #include "binary_trees.h"
+#define POW2(x) (1 << (x))
 
 heap_t *heap_append(heap_t *root, int value);
 int count_nodes(heap_t *root);
@@ -93,22 +94,28 @@ int count_nodes(heap_t *root)
  * @position: an int reference for the relative position in the level
  *
  * Example:
- *   |         index         Level   position in the Level
+ *   |         index         Level   position (in the Level)
  *   |           0             0               0
  *   |       1       2         1           0       1
  *   |     3   4   5   6       2         0   1   2   3
  *   |    7 8 9 A B C D E      3        0 1 2 3 4 5 6 7
+ *
+ * offset = 2^level - 1
+ * level:  0, 1, 2, 3,  4,  5
+ * offset: 0, 1, 3, 7, 15, 32
  */
 void index_to_lvl_pos(int index, int *level, int *position)
 {
-	int ref = 1;
+	int offset;
 
-	for (*level = 0; index >= ((ref * 2) - 1); ref = ref * 2)
+	*level = 0;
+	while (POW2(*level + 1) - 1 <= index)
 	{
 		(*level)++;
 	}
 
-	*position = index - (ref - 1);
+	offset = (POW2(*level)) - 1;
+	*position = index - offset;
 }
 
 /**

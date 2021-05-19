@@ -14,6 +14,20 @@ static void copy_grid(int grid1[3][3], int grid2[3][3])
 			grid1[i][j] = grid2[i][j];
 }
 
+/**
+ * copy_grid - Print 3x3 grid
+ * @grid: 3x3 grid
+ *
+ */
+static int is_stable(int grid[3][3])
+{
+	int i,j, stable = 1;
+	for (i = 0; i < 3; i++)
+		for (j = 0; j < 3; j++)
+			stable = stable && grid[i][j] <= 3;
+	return (stable);
+}
+
 
 /**
  * print_grid - Print 3x3 grid
@@ -60,7 +74,7 @@ void sandpiles_sum(int grid1[3][3], int grid2[3][3])
 				stable = 0;
 		}
 	}
-
+	stable = is_stable(grid1);
 	while (!stable)
 	{
 		stable = 1;
@@ -78,28 +92,25 @@ void sandpiles_sum(int grid1[3][3], int grid2[3][3])
 					{
 						cell = &grid1[i + 1][j];
 						(*cell)++;
-						stable = stable && (*cell < 4 ) ? 1 : 0;
 					}
 					if (j < 2)
 					{
 						cell = &grid1[i][j + 1];
 						(*cell)++;
-						stable = stable && (*cell < 4 ) ? 1 : 0;
 					}
 					if (i > 0)
 					{
 						cell = &grid1[i - 1][j];
 						(*cell)++;
-						stable = stable && (*cell < 4 ) ? 1 : 0;
 					}
 					if (j > 0)
 					{
 						cell = &grid1[i][j - 1];
 						(*cell)++;
-						stable = stable && (*cell < 4 ) ? 1 : 0;
 					}
 				}
 			}
+		stable = is_stable(grid1);
 		copy_grid(grid2, grid1);
 	}
 

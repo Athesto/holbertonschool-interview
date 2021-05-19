@@ -6,10 +6,10 @@ if (( $#  == 0 )); then
     COUNT=$(( $(find mains/*.c | wc -w) -1 ))
     for INPUT in $(seq 0 "$COUNT"); do
         make "$INPUT"
-        diff <(./0-sandpiles) mains/output/"$INPUT"-main
+        diff <(./a.out) mains/output/"$INPUT"-main
     done
 else
     INPUT=${1:-0}
     make "$INPUT"
-    diff <(./0-sandpiles) mains/output/"$INPUT"-main
+    diff <(./a.out) mains/output/"$INPUT"-main
 fi

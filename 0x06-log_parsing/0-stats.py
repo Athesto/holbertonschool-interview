@@ -14,7 +14,7 @@ def print_info(info, size):
 
 
 def signal_handler(sig, frame):
-    print("you pressed Ctrl+C")
+    pass
 
 
 def main():
@@ -40,7 +40,7 @@ def main():
     line_counter = 0
     code_counter = {}
     sizes = 0
-#     signal.signal(signal.SIGINT, signal_handler)
+    signal.signal(signal.SIGINT, signal_handler)
     for line in sys.stdin:
         out = re.match(pattern, line)
         if out:

@@ -18,6 +18,7 @@ def signal_handler(sig, frame):
 
 
 def main():
+    valid_codes = [200, 301, 400, 401, 403, 404, 405, 500]
     regex = {
         "ip":
             r"((?:(?:25[0-5]|2[0-4]\d|1?\d?\d)\.){3}"
@@ -27,7 +28,7 @@ def main():
 
         "time": "([0-5]\d:[0-5]\d:[0-5]\d\.\d+)",
 
-        "code": "(200|301|400|401|403|404|405|500)",
+        "code": "(\w+)",
 
         "size": "(\d+)",
 
@@ -45,12 +46,13 @@ def main():
         out = re.match(pattern, line)
         if out:
             line_counter += 1
-            code = out.group(4)
             sizes += int(out.group(5))
-            if code not in code_counter.keys():
-                code_counter[code] = 1
-            else:
-                code_counter[code] += 1
+            code = out.group(4)
+            if code in map(str, valid_codes):
+                if code not in code_counter.keys():
+                    code_counter[code] = 1
+                else:
+                    code_counter[code] += 1
             if line_counter % 10 == 0:
                 print_info(code_counter, sizes)
     if line_counter == 0 or line_counter % 10 != 0:

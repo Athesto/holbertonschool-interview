@@ -1,7 +1,8 @@
 #!/usr/bin/python3
 '''interview of elements in an list'''
-import sys
 import re
+import signal
+import sys
 
 
 def print_info(info, size):
@@ -10,6 +11,10 @@ def print_info(info, size):
     print("File size: {}".format(size))
     for code in codes:
         print("{}: {}".format(code, info[code]))
+
+
+def signal_handler(sig, frame):
+    print("you pressed Ctrl+C")
 
 
 def main():
@@ -35,6 +40,7 @@ def main():
     line_counter = 0
     code_counter = {}
     sizes = 0
+#     signal.signal(signal.SIGINT, signal_handler)
     for line in sys.stdin:
         out = re.match(pattern, line)
         if out:
@@ -47,6 +53,8 @@ def main():
                 code_counter[code] += 1
             if line_counter % 10 == 0:
                 print_info(code_counter, sizes)
+    if line_counter % 10 != 0:
+        print_info(code_counter, sizes)
 
 
 if __name__ == "__main__":

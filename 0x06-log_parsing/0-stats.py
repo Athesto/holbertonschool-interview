@@ -35,7 +35,8 @@ def main():
         "path": "/projects/260"
     }
 
-    pattern = '^{ip} - \[{date} {time}\] "GET {path} HTTP/1.1" {code} {size}$'
+    pattern = \
+        '^{ip} ?- ?\[{date} {time}\] "GET {path} HTTP/1.1" {code} {size}$'
     pattern = pattern.format(**regex)
 
     line_counter = 0

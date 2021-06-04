@@ -53,7 +53,7 @@ def main():
                 code_counter[code] += 1
             if line_counter % 10 == 0:
                 print_info(code_counter, sizes)
-    if line_counter % 10 != 0:
+    if line_counter == 0 or line_counter % 10 != 0:
         print_info(code_counter, sizes)
 
 

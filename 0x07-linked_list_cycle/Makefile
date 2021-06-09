@@ -1,6 +1,6 @@
 CC=gcc
 CFLAGS=-g -Wall -Wextra -Werror -pedantic
-SRC=*.c tests/0-main.c
+SRC=*.c tests/0-linkedlist.c tests/0-main.c
 OUT=a.out
 
 build:

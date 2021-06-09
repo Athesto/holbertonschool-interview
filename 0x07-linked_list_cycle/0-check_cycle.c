@@ -1,5 +1,4 @@
 #include "lists.h"
-#include <stddef.h> /* NULL */
 
 /**
  * check_cycle - check if linkedlist is cyclic

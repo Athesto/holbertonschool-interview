@@ -10,9 +10,6 @@ int check_cycle(listint_t *head)
 {
 	listint_t *turtle, *rabbit;
 
-	if (head == NULL)
-		return (1);
-
 	turtle = rabbit = head;
 	while (rabbit && rabbit->next)
 	{

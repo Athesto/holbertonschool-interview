@@ -5,17 +5,20 @@
 /**
  * print_listint - print linked list
  * @head: head of list
+ * Return: size of list
  */
-void print_listint(listint_t *head)
+size_t print_listint(const listint_t *head)
 {
-	listint_t *runner;
+	const listint_t *runner;
+	size_t n;
 
 	runner = head;
-	while (runner)
+	for (n = 0; runner; n++)
 	{
 		printf("%d\n", runner->n);
 		runner = runner->next;
 	}
+	return (n);
 }
 
 /**

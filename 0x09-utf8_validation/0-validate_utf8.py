@@ -8,10 +8,10 @@ def validUTF8(data):
     @data: list of integers
     Return: True if is a valid UTF-8, False otherwise
     '''
-    print(data)
+    # print(data)
     for i in range(len(data)):
         num = data[i] & 0xFF
-        print(num, end=",")
+        # print(num, end=",")
         if num >> 7 == 0:
             continue
         if num >> 5 == 0b110 and i < len(data) - 1:

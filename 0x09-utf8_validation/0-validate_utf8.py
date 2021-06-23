@@ -9,22 +9,24 @@ def validUTF8(data):
     Return: True if is a valid UTF-8, False otherwise
     '''
     # print(data)
-    for i in range(len(data)):
+    i = 0
+    while(i < len(data)):
         num = data[i] & 0xFF
         # print(num, end=",")
         if num >> 7 == 0:
+            i += 1
             continue
         if num >> 5 == 0b110 and i < len(data) - 1:
             if data[i + 1] >> 6 == 2:
-                i += 1
+                i += 2
                 continue
         if num >> 4 == 0b1110 and i < len(data) - 2:
             if data[i + 1] >> 6 == data[i + 2] >> 6 == 2:
-                i += 2
+                i += 3
                 continue
         if num >> 3 == 0b11110 and i < len(data) - 3:
             if data[i + 1] >> 6 == data[i + 2] >> 6 == data[i + 3] >> 6 == 2:
-                i += 3
+                i += 4
                 continue
         return False
     return True

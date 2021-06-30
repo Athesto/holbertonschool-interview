@@ -1,4 +1,8 @@
 #include "slide_line.h"
+/*
+ * pos(i) - return the position of in line and change by direction
+ * Return: line[i] or line[size - 1 - i]
+ */
 #define pos(i) (line[(direction == SLIDE_LEFT) ? (i) : ((int) size - 1 - (i))])
 
 /**

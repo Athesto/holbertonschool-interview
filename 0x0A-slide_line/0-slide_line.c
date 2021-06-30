@@ -1,5 +1,5 @@
 #include "slide_line.h"
-#define pos(i) (line[(direction) == SLIDE_LEFT ? (i) : (end - (i))])
+#define pos(i) (line[(direction == SLIDE_LEFT) ? (i) : ((int) size - 1 - (i))])
 
 /**
  * slide_line - reproduce the 2048 game(NSFW !!) mechanics
@@ -12,7 +12,7 @@
  */
 int slide_line(int *line, size_t size, int direction)
 {
-	int fwd, bwd, wasAdded, end = size - 1;
+	int fwd, bwd, wasAdded;
 
 	wasAdded = 0;
 	if (direction != SLIDE_LEFT && direction != SLIDE_RIGHT)
@@ -36,11 +36,11 @@ int slide_line(int *line, size_t size, int direction)
 			}
 			else
 			{
-				wasAdded = 0;
 				if (pos(bwd) == 0)
 					pos(bwd) += pos(fwd);
 				else
 					pos(bwd + 1) += pos(fwd);
+				wasAdded = 0;
 			}
 			pos(fwd) = 0;
 		}

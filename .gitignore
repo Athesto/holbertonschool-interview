@@ -2,3 +2,5 @@ __pycache__
 .*.swp
 a.out
 .tags
+tmp/
+.gdb*

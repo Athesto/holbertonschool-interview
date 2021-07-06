@@ -23,3 +23,7 @@ print(validUTF8(data))
 # 2Bytes but 2nd wrong
 data = [213, 10]
 print(validUTF8(data))
+
+# 2Bytes but 2nd right
+data = [0b1101_1111, 0b1011_1111]
+print(validUTF8(data))

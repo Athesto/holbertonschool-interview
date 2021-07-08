@@ -1,6 +1,6 @@
 #include "menger.h"
 #define IMAGE '#'
-#define EMPTY '_'
+#define EMPTY ' '
 #define DEBUG 0
 
 char **initSpace(int level);
